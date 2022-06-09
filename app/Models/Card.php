@@ -14,7 +14,12 @@ class Card extends Model
         'meta' => 'json',
     ];
 
-    public function importExternalImageUrl()
+    public function getImageUrlAttribute()
+    {
+        return $this->internal_image_url ?? $this->external_image_url;
+    }
+
+    public function importImageUrl()
     {
         $upload = Cloudinary::upload($this->external_image_url, ['folder' => 'mtg']);
 

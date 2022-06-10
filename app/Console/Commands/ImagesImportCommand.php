@@ -14,7 +14,7 @@ class ImagesImportCommand extends Command
     public function handle()
     {
         Card::whereNull('internal_image_url')->chunkById(1000, fn ($cards) => (
-            $cards->each(fn (Card $card) => $card->importImageUrl())
+            $cards->each(fn (Card $card) => rescue(fn () => $card->importImageUrl()))
         ));
 
         return 0;
